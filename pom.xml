@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flowlogix</groupId>
     <artifactId>faces-affinity</artifactId>
-    <version>1.x-SNAPSHOT</version>
+    <version>0.5</version>
     <name>Jakarta Faces Affinity</name>
     <description>Flow Logix Jakarta Faces Affinity for WYSIWYG tools</description>
     <inceptionYear>2014</inceptionYear>
@@ -26,7 +26,7 @@
         <url>https://github.com/flowlogix/faces-affinity</url>
         <connection>scm:git:git@github.com:flowlogix/faces-affinity.git</connection>
         <developerConnection>scm:git:git@github.com:flowlogix/faces-affinity.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>Version-0.5</tag>
     </scm>
 
     <distributionManagement>
@@ -46,7 +46,7 @@
         <gpg.keyname>Flow Logix, Inc.</gpg.keyname>
         <staging.server>flowlogix-maven-central-s01</staging.server>
         <nexus.url>https://s01.oss.sonatype.org</nexus.url>
-        <project.build.outputTimestamp>2023-05-19T07:18:43Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2023-07-05T04:32:38Z</project.build.outputTimestamp>
     </properties>
 
     <dependencies>
@@ -218,10 +218,10 @@
                         <createDependencyReducedPom>false</createDependencyReducedPom>
                         <minimizeJar>false</minimizeJar>
                         <transformers>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                             <transformer implementation="io.yupiik.maven.shade.transformer.RelocationTransformer">
                                 <delegates>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer" />
                                     <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
                                         <resource>WEB-INF/faces-config.xml</resource>
                                     </transformer>
