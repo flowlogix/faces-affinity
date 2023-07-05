@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 lprimak.
+ * Copyright (C) 2011-2023 Flow Logix, Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.flowlogix.ui;
+package com.flowlogix.faces.affinity;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -24,96 +24,76 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import org.omnifaces.util.Faces;
+import static com.flowlogix.util.JakartaTransformerUtils.jakartify;
 
 /**
  * DreamWeaver viewable resource support for JSF
- * 
+ *
  * @author lprimak
  */
-@FacesComponent("flowlogix:resource")
-public class DynResource extends UINamingContainer
-{
+@FacesComponent("flowlogix.faces.affinity:resource")
+public class DynResource extends UINamingContainer {
+    private static final String FLOWLOGIX_OUTERTAG = "flowlogix.faces.affinity.outerTag";
+    private static final Pattern firstPathPattern = Pattern.compile("^/([^/]*)/.*");
+
     @Override
-    public void encodeBegin(FacesContext context) throws IOException
-    {
-        String outerTag = (String)getAttributes().get(FLOWLOGIX_OUTERTAG);
+    public void encodeBegin(FacesContext context) throws IOException {
+        String outerTag = (String) getAttributes().get(FLOWLOGIX_OUTERTAG);
         getStateHelper().put(FLOWLOGIX_OUTERTAG, outerTag);
-        String sourceKey = (String)getAttributes().get("flowlogix.sourceKey");
+        String sourceKey = (String) getAttributes().get("flowlogix.faces.affinity.sourceKey");
         ResponseWriter responseWriter = context.getResponseWriter();
         responseWriter.startElement(outerTag, this);
-        for(Object _key : getAttributes().keySet())
-        {
-            if(!(_key instanceof String))
-            {
+        for (Object _key : getAttributes().keySet()) {
+            if (!(_key instanceof String)) {
                 continue;
             }
-            String key = (String)_key;
-            if(key.startsWith("com.sun.faces") || key.startsWith("javax.faces") || key.startsWith("flowlogix."))
-            {
+            String key = (String) _key;
+            if (key.startsWith("com.sun.faces") || key.startsWith(jakartify("javax.faces")) || key.startsWith("flowlogix.faces.affinity.")) {
                 continue;
             }
             Object _value = getAttributes().get(key);
-            if(_value instanceof String)
-            {
-                String value = (String)_value;
-                if(sourceKey.equalsIgnoreCase(key))
-                {
+            if (_value instanceof String) {
+                String value = (String) _value;
+                if (sourceKey.equalsIgnoreCase(key)) {
                     boolean staticResource = Boolean.valueOf(context
                             .getExternalContext().getInitParameter(getClass().getPackage().getName() + ".useLibrary"));
                     value = value.replaceFirst("^.*/resources/", "/");
-                    if(!Faces.isDevelopment() && (value.endsWith(".css") || value.endsWith(".js")))
-                    {
+                    if (!Faces.isDevelopment() && (value.endsWith(".css") || value.endsWith(".js"))) {
                         value = value.replaceFirst("(.*)(\\.css|\\.js)$", "$1.min$2");
                     }
-                    if(!Faces.isDevelopment() && value.endsWith(".less"))
-                    {
+                    if (!Faces.isDevelopment() && value.endsWith(".less")) {
                         value = value.replaceFirst("\\.less$", ".css");
                     }
-                    if(Faces.isDevelopment() && value.endsWith(".css"))
-                    {
-                        String relStr = (String)getAttributes().get("rel");
-                        if(relStr != null && relStr.endsWith("/less"))
-                        {
+                    if (Faces.isDevelopment() && value.endsWith(".css")) {
+                        String relStr = (String) getAttributes().get("rel");
+                        if (relStr != null && relStr.endsWith("/less")) {
                             staticResource = false;
                             value = value.replaceFirst("\\.css$", ".less");
                         }
                     }
                     Resource resource;
                     Matcher matcher = firstPathPattern.matcher(value);
-                    if(staticResource == true && matcher.matches())
-                    {
+                    if (staticResource == true && matcher.matches()) {
                         value = value.replaceFirst(String.format("^/%s/", matcher.group(1)), "");
                         resource = context.getApplication().getResourceHandler().createResource(value, matcher.group(1));
-                    }
-                    else
-                    {
+                    } else {
                         resource = context.getApplication().getResourceHandler().createResource(value);
                     }
-                    if(resource == null)
-                    {
+                    if (resource == null) {
                         throw new IOException(String.format("Unable to Find Resource: %s", value));
                     }
                     value = resource.getRequestPath();
-                }
-                else if(!Faces.isDevelopment() && "rel".equalsIgnoreCase(key))
-                {
+                } else if (!Faces.isDevelopment() && "rel".equalsIgnoreCase(key)) {
                     value = value.replaceFirst("\\/less$", "");
                 }
                 responseWriter.writeAttribute(key, value, key);
             }
         }
-    }   
-    
-    
-    @Override
-    public void encodeEnd(FacesContext context) throws IOException
-    {
-        ResponseWriter responseWriter = context.getResponseWriter();
-        responseWriter.endElement((String)getStateHelper().get(FLOWLOGIX_OUTERTAG));
     }
 
-    
-    private static final String FLOWLOGIX_OUTERTAG = "flowlogix.outerTag";
-    private static final Pattern firstPathPattern = Pattern.compile("^/([^/]*)/.*");
+    @Override
+    public void encodeEnd(FacesContext context) throws IOException {
+        ResponseWriter responseWriter = context.getResponseWriter();
+        responseWriter.endElement((String) getStateHelper().get(FLOWLOGIX_OUTERTAG));
+    }
 }
-
