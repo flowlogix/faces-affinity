@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2023 Flow Logix, Inc. All Rights Reserved.
+ * Copyright (C) 2011-2024 Flow Logix, Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,23 +37,26 @@ public class DynResource extends UINamingContainer {
     private static final Pattern firstPathPattern = Pattern.compile("^/([^/]*)/.*");
 
     @Override
+    @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity",
+                       "checkstyle:NestedIfDepth"})
     public void encodeBegin(FacesContext context) throws IOException {
         String outerTag = (String) getAttributes().get(FLOWLOGIX_OUTERTAG);
         getStateHelper().put(FLOWLOGIX_OUTERTAG, outerTag);
         String sourceKey = (String) getAttributes().get("flowlogix.faces.affinity.sourceKey");
         ResponseWriter responseWriter = context.getResponseWriter();
         responseWriter.startElement(outerTag, this);
-        for (Object _key : getAttributes().keySet()) {
-            if (!(_key instanceof String)) {
+        for (Object keyObject : getAttributes().keySet()) {
+            if (!(keyObject instanceof String)) {
                 continue;
             }
-            String key = (String) _key;
-            if (key.startsWith("com.sun.faces") || key.startsWith(jakartify("javax.faces")) || key.startsWith("flowlogix.faces.affinity.")) {
+            String key = (String) keyObject;
+            if (key.startsWith("com.sun.faces") || key.startsWith(jakartify("javax.faces"))
+                    || key.startsWith("flowlogix.faces.affinity.")) {
                 continue;
             }
-            Object _value = getAttributes().get(key);
-            if (_value instanceof String) {
-                String value = (String) _value;
+            Object valueObject = getAttributes().get(key);
+            if (valueObject instanceof String) {
+                String value = (String) valueObject;
                 if (sourceKey.equalsIgnoreCase(key)) {
                     boolean staticResource = Boolean.valueOf(context
                             .getExternalContext().getInitParameter(getClass().getPackage().getName() + ".useLibrary"));
@@ -73,7 +76,7 @@ public class DynResource extends UINamingContainer {
                     }
                     Resource resource;
                     Matcher matcher = firstPathPattern.matcher(value);
-                    if (staticResource == true && matcher.matches()) {
+                    if (staticResource && matcher.matches()) {
                         value = value.replaceFirst(String.format("^/%s/", matcher.group(1)), "");
                         resource = context.getApplication().getResourceHandler().createResource(value, matcher.group(1));
                     } else {
