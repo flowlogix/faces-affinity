@@ -50,7 +50,7 @@
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <bottom>Copyright © ${project.inceptionYear}-2023 Flow Logix, Inc. All Rights Reserved.</bottom>
+                    <bottom>Copyright © ${project.inceptionYear}-2024 Flow Logix, Inc. All Rights Reserved.</bottom>
                     <links>
                         <link>https://javadoc.io/doc/org.omnifaces/omnifaces/${omnifaces.version}</link>
                     </links>
