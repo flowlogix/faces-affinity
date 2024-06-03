@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>faces-affinity</artifactId>
-    <version>1.x-SNAPSHOT</version>
+    <version>0.7</version>
     <name>Jakarta Faces Affinity</name>
     <description>Flow Logix Jakarta Faces Affinity for WYSIWYG tools</description>
     <inceptionYear>2014</inceptionYear>
@@ -17,7 +17,8 @@
         <url>https://github.com/flowlogix/faces-affinity</url>
         <connection>scm:git:git@github.com:flowlogix/faces-affinity.git</connection>
         <developerConnection>scm:git:git@github.com:flowlogix/faces-affinity.git</developerConnection>
-    </scm>
+      <tag>Version-0.7</tag>
+  </scm>
 
     <properties>
         <checkstyle.supressionsLocation>${basedir}/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
@@ -69,10 +70,10 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <minimizeJar>false</minimizeJar>
                     <transformers>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                         <transformer implementation="io.yupiik.maven.shade.transformer.RelocationTransformer">
                             <delegates>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer" />
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
                                     <resource>WEB-INF/faces-config.xml</resource>
                                 </transformer>
