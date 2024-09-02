@@ -20,10 +20,10 @@
     </scm>
 
     <properties>
-        <checkstyle.supressionsLocation>${basedir}/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
+        <checkstyle.supressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.supressionsLocation>
         <maven.compiler.release>11</maven.compiler.release>
         <jakarta.ee.version>8.0.0</jakarta.ee.version>
-        <omnifaces.version>3.14.5</omnifaces.version>
+        <omnifaces.version>3.14.6</omnifaces.version>
     </properties>
 
     <dependencies>
@@ -52,7 +52,7 @@
                 <configuration>
                     <bottom>Copyright © ${project.inceptionYear}-2024 Flow Logix, Inc. All Rights Reserved.</bottom>
                     <links>
-                        <link>https://javadoc.io/doc/org.omnifaces/omnifaces/${omnifaces.version}</link>
+                        <link>${central.archive.url}/org/omnifaces/omnifaces/${omnifaces.version}/omnifaces-${omnifaces.version}-javadoc.jar/!</link>
                     </links>
                 </configuration>
             </plugin>
