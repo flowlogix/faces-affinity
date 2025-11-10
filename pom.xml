@@ -23,7 +23,7 @@
         <checkstyle.suppressionsLocation>${basedir}/src/checkstyle/suppressions.xml</checkstyle.suppressionsLocation>
         <maven.compiler.release>11</maven.compiler.release>
         <jakarta.ee.version>8.0.0</jakarta.ee.version>
-        <omnifaces.version>3.14.11</omnifaces.version>
+        <omnifaces.version>3.14.12</omnifaces.version>
     </properties>
 
     <dependencies>
