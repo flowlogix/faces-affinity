@@ -27,7 +27,7 @@ import org.omnifaces.util.Faces;
 import static com.flowlogix.util.JakartaTransformerUtils.jakartify;
 
 /**
- * DreamWeaver viewable resource support for JSF
+ * DreamWeaver viewable resource support for JSF.
  *
  * @author lprimak
  */
