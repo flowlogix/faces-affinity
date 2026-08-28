@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.flowlogix</groupId>
         <artifactId>infra-pom</artifactId>
-        <version>137</version>
+        <version>138</version>
     </parent>
 
     <url>https://github.com/flowlogix/faces-affinity</url>
